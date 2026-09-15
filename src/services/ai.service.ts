@@ -1,4 +1,5 @@
 import type { IAIRequestRepository } from "@/core/interfaces/repositories";
+import type { Prisma } from "@prisma/client";
 import type { IResumeRepository } from "@/core/interfaces/repositories";
 import { AppError } from "@/core/errors/app.error";
 import { AI_CREDIT_COSTS } from "@/constants";
@@ -119,7 +120,7 @@ export class AIService {
     );
 
     await this.aiRepo.create({
-      userId, type: "GENERATE_SUMMARY", input: dto, output: { result }, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
+      userId, type: "GENERATE_SUMMARY", input: dto as unknown as Prisma.InputJsonValue, output: { result } as unknown as Prisma.InputJsonValue, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }
@@ -142,7 +143,7 @@ export class AIService {
     };
 
     await this.aiRepo.create({
-      userId, type: "ATS_OPTIMIZE", input: dto, output: result, tokensUsed: dto.resumeText.length, model: "zkr-heuristic-v1", status: "COMPLETED", completedAt: new Date(),
+      userId, type: "ATS_OPTIMIZE", input: dto as unknown as Prisma.InputJsonValue, output: result as unknown as Prisma.InputJsonValue, tokensUsed: dto.resumeText.length, model: "zkr-heuristic-v1", status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }
@@ -160,7 +161,7 @@ export class AIService {
     );
 
     await this.aiRepo.create({
-      userId, type: "REWRITE_SENTENCE", input: dto, output: { result }, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
+      userId, type: "REWRITE_SENTENCE", input: dto as unknown as Prisma.InputJsonValue, output: { result } as unknown as Prisma.InputJsonValue, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }
@@ -176,7 +177,7 @@ export class AIService {
     );
 
     await this.aiRepo.create({
-      userId, type: "GRAMMAR_FIX", input: dto, output: { result }, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
+      userId, type: "GRAMMAR_FIX", input: dto as unknown as Prisma.InputJsonValue, output: { result } as unknown as Prisma.InputJsonValue, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }
@@ -214,7 +215,7 @@ export class AIService {
     };
 
     await this.aiRepo.create({
-      userId, type: "RESUME_SCORE", input: dto, output: result, tokensUsed: dto.resumeText.length, model: "zkr-heuristic-v1", status: "COMPLETED", completedAt: new Date(),
+      userId, type: "RESUME_SCORE", input: dto as unknown as Prisma.InputJsonValue, output: result as unknown as Prisma.InputJsonValue, tokensUsed: dto.resumeText.length, model: "zkr-heuristic-v1", status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }
@@ -242,7 +243,7 @@ Applicant`;
     );
 
     await this.aiRepo.create({
-      userId, type: "COVER_LETTER", input: dto, output: { result }, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
+      userId, type: "COVER_LETTER", input: dto as unknown as Prisma.InputJsonValue, output: { result } as unknown as Prisma.InputJsonValue, tokensUsed: result.length, model, status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }
@@ -268,7 +269,7 @@ Applicant`;
     const result = { suggested, missing: suggested.slice(0, 3) };
 
     await this.aiRepo.create({
-      userId, type: "SKILLS_SUGGEST", input: dto, output: result, tokensUsed: 40, model: "zkr-heuristic-v1", status: "COMPLETED", completedAt: new Date(),
+      userId, type: "SKILLS_SUGGEST", input: dto as unknown as Prisma.InputJsonValue, output: result as unknown as Prisma.InputJsonValue, tokensUsed: 40, model: "zkr-heuristic-v1", status: "COMPLETED", completedAt: new Date(),
     });
     return result;
   }

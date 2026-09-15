@@ -1,4 +1,4 @@
-import type { User, Session, RefreshToken, Resume, ResumeSection, AIRequest, Download } from "@prisma/client";
+import type { User, Session, RefreshToken, Resume, ResumeSection, AIRequest, Download, AIRequestType, AIRequestStatus, Prisma } from "@prisma/client";
 import type { SafeUser } from "@/types";
 
 export interface IUserRepository {
@@ -39,5 +39,5 @@ export interface IResumeRepository {
 }
 
 export interface IAIRequestRepository {
-  create(data: { userId: string; type: string; input: unknown; output: unknown; tokensUsed: number; model: string; status: string; completedAt?: Date }): Promise<AIRequest>;
+  create(data: { userId: string; type: AIRequestType; input: Prisma.InputJsonValue; output: Prisma.InputJsonValue; tokensUsed: number; model: string; status: AIRequestStatus; completedAt?: Date }): Promise<AIRequest>;
 }
