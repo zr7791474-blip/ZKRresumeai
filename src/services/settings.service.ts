@@ -1,4 +1,5 @@
 import { prisma } from "@/infra/database/prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export interface NotificationPrefs {
   productUpdates: boolean;
@@ -25,7 +26,12 @@ export class SettingsService {
     const settings = await prisma.userSettings.upsert({
       where: { userId },
       update: {},
-      create: { userId, theme: "system", notifications: DEFAULT_NOTIFICATIONS, privacy: DEFAULT_PRIVACY },
+      create: {
+        userId,
+        theme: "system",
+        notifications: DEFAULT_NOTIFICATIONS as unknown as Prisma.InputJsonValue,
+        privacy: DEFAULT_PRIVACY as unknown as Prisma.InputJsonValue,
+      },
     });
     return settings;
   }
@@ -42,8 +48,8 @@ export class SettingsService {
       where: { userId },
       data: {
         theme: dto.theme ?? current.theme,
-        notifications,
-        privacy,
+        notifications: notifications as unknown as Prisma.InputJsonValue,
+        privacy: privacy as unknown as Prisma.InputJsonValue,
       },
     });
   }

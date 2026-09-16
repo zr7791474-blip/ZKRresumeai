@@ -36,8 +36,16 @@ export class PrismaResumeRepository implements IResumeRepository {
     return true;
   }
 
-  async createSection(data: { resumeId: string; type: string; title?: string | null; content: unknown; order: number }) {
-    return prisma.resumeSection.create({ data });
+  async createSection(data: { resumeId: string; type: string; title?: string | null; content?: unknown; order: number }) {
+    return prisma.resumeSection.create({
+      data: {
+        resumeId: data.resumeId,
+        type: data.type as any,
+        title: data.title,
+        content: (data.content ?? {}) as any,
+        order: data.order,
+      },
+    });
   }
 
   async updateSection(id: string, resumeId: string, data: Partial<any>): Promise<any | null> {
@@ -52,7 +60,14 @@ export class PrismaResumeRepository implements IResumeRepository {
   }
 
   async createDownload(data: { userId: string; resumeId: string; format: string; filename: string; fileSize: number }) {
-    await prisma.download.create({ data });
-    return {} as any;
+    return prisma.download.create({
+      data: {
+        userId: data.userId,
+        resumeId: data.resumeId,
+        format: data.format as any,
+        filename: data.filename,
+        fileSize: data.fileSize,
+      },
+    });
   }
 }

@@ -30,10 +30,10 @@ export interface IResumeRepository {
   findMany(userId: string): Promise<(Resume & { sections: ResumeSection[] })[]>;
   findById(id: string, userId: string): Promise<(Resume & { sections: ResumeSection[] }) | null>;
   create(data: { userId: string; title: string; templateId?: string | null }): Promise<Resume>;
-  update(id: string, userId: string, data: Partial<Pick<Resume, "title" | "templateId" | "status" | "isFavorite" | "data">>): Promise<Resume | null>;
+  update(id: string, userId: string, data: Partial<Pick<Resume, "title" | "templateId" | "status" | "isFavorite">> & { data?: any }): Promise<Resume | null>;
   softDelete(id: string, userId: string): Promise<boolean>;
-  createSection(data: { resumeId: string; type: string; title?: string | null; content: unknown; order: number }): Promise<ResumeSection>;
-  updateSection(id: string, resumeId: string, data: Partial<Pick<ResumeSection, "title" | "content" | "order">>): Promise<ResumeSection | null>;
+  createSection(data: { resumeId: string; type: string; title?: string | null; content?: unknown; order: number }): Promise<ResumeSection>;
+  updateSection(id: string, resumeId: string, data: Partial<Pick<ResumeSection, "title" | "order">> & { content?: any }): Promise<ResumeSection | null>;
   deleteSection(id: string, resumeId: string): Promise<boolean>;
   createDownload(data: { userId: string; resumeId: string; format: string; filename: string; fileSize: number }): Promise<Download>;
 }
