@@ -1,9 +1,8 @@
-export interface ResumeTemplateDef {
+﻿export interface ResumeTemplateDef {
   id: string;
   name: string;
   category: string;
   description: string;
-  /** Longer copy shown on the individual template preview page. */
   longDescription: string;
   accent: string;
 }
